@@ -10,12 +10,14 @@
   (= (:request-method request) :get))
 
 (defn- success? [response]
-  (<= 200 (:status response) 299))
+  (if response
+    (<= 200 (:status response) 299)
+    true))
 
 (defn- html-content? [response]
   (re-find
    #"text/html"
-   (get-in response [:headers "Content-Type"])))
+   (get-in response [:headers "Content-Type"] "text/html")))
 
 (def ^:private refresh-script
   (slurp (io/resource "ring/js/refresh.js")))
