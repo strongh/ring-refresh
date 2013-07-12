@@ -47,11 +47,15 @@
 (def ^:private last-modified
   (atom (Date.)))
 
+(defn trigger-refresh!
+  [_]
+  (reset! last-modified (Date.)))
+
 (defn- watch-dirs! [dirs]
   (watcher dirs
    (rate 100)
    (on-change
-    (fn [_] (reset! last-modified (Date.))))))
+    trigger-refresh!)))
 
 (defn- random-uuid []
   (str (UUID/randomUUID)))
