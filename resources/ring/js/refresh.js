@@ -12,7 +12,9 @@ function reloadIfSourceChanged() {
             }
         }
     }
-    request.open('GET', '/__source_changed?since=' + pageLoadTime, true)
+    relativeRoot = window.location.pathname.split('/')
+    relativeRoot.pop()
+    request.open('GET', relativeRoot.join("/") + '/__source_changed?since=' + pageLoadTime, true)
     request.send()
 }
 
